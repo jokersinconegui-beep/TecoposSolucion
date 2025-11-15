@@ -1,5 +1,8 @@
 {
   "expo": {
+    // "plugins": [
+    //   "react-native-gesture-handler"
+    // ],
     "name": "TecoposSolucion",
     "slug": "TecoposSolucion",
     "version": "1.0.0",

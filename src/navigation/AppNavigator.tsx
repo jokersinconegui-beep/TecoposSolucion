@@ -5,6 +5,7 @@ import LoginScreen from '../screens/LoginScreen';
 import AccountsScreen from '../screens/AccountsScreen';
 import TransactionsScreen from '../screens/TransactionsScreen';
 import AddTransactionScreen from '../screens/AddTransactionScreen';
+import { useAuth } from '../contexts/AuthContext';
 
 export type RootStackParamList = {
   Login: undefined;
@@ -16,10 +17,12 @@ export type RootStackParamList = {
 const Stack = createStackNavigator<RootStackParamList>();
 
 const AppNavigator = () => {
+  const { isAuthenticated } = useAuth();
+
   return (
     <NavigationContainer>
       <Stack.Navigator 
-        initialRouteName="Login"
+        initialRouteName={isAuthenticated ? "Accounts" : "Login"}
         screenOptions={{
           headerStyle: {
             backgroundColor: '#2196F3',
@@ -30,26 +33,31 @@ const AppNavigator = () => {
           },
         }}
       >
-        <Stack.Screen 
-          name="Login" 
-          component={LoginScreen}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen 
-          name="Accounts" 
-          component={AccountsScreen}
-          options={{ title: 'Mis Cuentas' }}
-        />
-        <Stack.Screen 
-          name="Transactions" 
-          component={TransactionsScreen}
-          options={({ route }) => ({ title: route.params.accountName })}
-        />
-        <Stack.Screen 
-          name="AddTransaction" 
-          component={AddTransactionScreen}
-          options={{ title: 'Nueva Operación' }}
-        />
+        {!isAuthenticated ? (
+          <Stack.Screen 
+            name="Login" 
+            component={LoginScreen}
+            options={{ headerShown: false }}
+          />
+        ) : (
+          <>
+            <Stack.Screen 
+              name="Accounts" 
+              component={AccountsScreen}
+              options={{ title: 'Mis Cuentas' }}
+            />
+            <Stack.Screen 
+              name="Transactions" 
+              component={TransactionsScreen}
+              options={({ route }) => ({ title: route.params.accountName })}
+            />
+            <Stack.Screen 
+              name="AddTransaction" 
+              component={AddTransactionScreen}
+              options={{ title: 'Nueva Operación' }}
+            />
+          </>
+        )}
       </Stack.Navigator>
     </NavigationContainer>
   );
