@@ -10,8 +10,14 @@ import { useAuth } from '../contexts/AuthContext';
 export type RootStackParamList = {
   Login: undefined;
   Accounts: undefined;
-  Transactions: { accountId: string; accountName: string };
-  AddTransaction: { accountId: string };
+  Transactions: { 
+    accountId: string; 
+    accountName: string;
+  };
+  AddTransaction: { 
+    accountId: string;
+    accountName?: string;
+  };
 };
 
 const Stack = createStackNavigator<RootStackParamList>();

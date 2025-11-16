@@ -22,12 +22,13 @@ type Props = {
   route: {
     params: {
       accountId: string;
+      accountName?: string;
     };
   };
 };
 
 const AddTransactionScreen: React.FC<Props> = ({ navigation, route }) => {
-  const { accountId } = route.params;
+  const { accountId, accountName } = route.params;
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const {
@@ -73,6 +74,7 @@ const AddTransactionScreen: React.FC<Props> = ({ navigation, route }) => {
             text: 'OK',
             onPress: () => {
               resetForm();
+              // Simplemente regresar - useFocusEffect en TransactionsScreen recargará
               navigation.goBack();
             },
           },
@@ -87,7 +89,24 @@ const AddTransactionScreen: React.FC<Props> = ({ navigation, route }) => {
   };
 
   const handleCancel = () => {
-    navigation.goBack();
+    if (formData.description || formData.amount) {
+      Alert.alert(
+        '¿Descartar cambios?',
+        'Tienes cambios sin guardar. ¿Estás seguro de que quieres salir?',
+        [
+          {
+            text: 'Cancelar',
+            style: 'cancel',
+          },
+          {
+            text: 'Salir',
+            onPress: () => navigation.goBack(),
+          },
+        ]
+      );
+    } else {
+      navigation.goBack();
+    }
   };
 
   return (
@@ -98,6 +117,9 @@ const AddTransactionScreen: React.FC<Props> = ({ navigation, route }) => {
         showsVerticalScrollIndicator={false}
       >
         <Text style={styles.title}>Nueva Transacción</Text>
+        {accountName && (
+          <Text style={styles.subtitle}>Cuenta: {accountName}</Text>
+        )}
 
         <SelectField
           label="Tipo de Transacción *"
@@ -151,7 +173,7 @@ const AddTransactionScreen: React.FC<Props> = ({ navigation, route }) => {
           </TouchableOpacity>
 
           <TouchableOpacity
-            style={[styles.button, styles.submitButton]}
+            style={[styles.button, styles.submitButton, isSubmitting && styles.buttonDisabled]}
             onPress={handleSubmit}
             disabled={isSubmitting}
           >
@@ -187,8 +209,14 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     color: '#333',
-    marginBottom: 24,
+    marginBottom: 8,
     textAlign: 'center',
+  },
+  subtitle: {
+    fontSize: 16,
+    color: '#666',
+    textAlign: 'center',
+    marginBottom: 24,
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -202,6 +230,9 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  buttonDisabled: {
+    opacity: 0.6,
   },
   cancelButton: {
     backgroundColor: '#f5f5f5',

@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { useFocusEffect } from '@react-navigation/native';
 import { RootStackParamList } from '../navigation/AppNavigator';
 import { Transaction } from '../types';
 import { apiService } from '../services/api';
@@ -64,9 +65,18 @@ const TransactionsScreen: React.FC<Props> = ({ navigation, route }) => {
     }
   };
 
+  // Efecto para cargar transacciones inicialmente
   useEffect(() => {
     loadTransactions();
   }, [accountId]);
+
+  // Recargar automáticamente cuando la pantalla recibe foco
+  useFocusEffect(
+    React.useCallback(() => {
+      console.log('🔄 TransactionsScreen recibió foco, recargando datos...');
+      loadTransactions(true);
+    }, [accountId])
+  );
 
   const handleRefresh = () => {
     setIsRefreshing(true);
@@ -74,7 +84,10 @@ const TransactionsScreen: React.FC<Props> = ({ navigation, route }) => {
   };
 
   const handleAddTransaction = () => {
-    navigation.navigate('AddTransaction', { accountId });
+    navigation.navigate('AddTransaction', { 
+      accountId,
+      accountName,
+    });
   };
 
   const calculateBalance = () => {

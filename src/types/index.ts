@@ -20,14 +20,15 @@ export interface Transaction {
   createdAt: string;
 }
 
-// Tipos para el formulario
+// Tipos para el formulario - CORREGIDO: eliminar shouldRefresh
 export interface TransactionFormData {
   accountId: string;
   type: 'income' | 'expense';
-  amount: string;
+  amount: string; // string para el input, luego se convierte a number
   description: string;
   category: string;
   date: string;
+  // REMOVER: shouldRefresh no pertenece al formulario
 }
 
 // Tipo para el contexto de autenticación
