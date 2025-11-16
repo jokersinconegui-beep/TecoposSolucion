@@ -37,7 +37,6 @@ Credenciales de prueba:
 📱 Para instalar en tu Android
 
 Si quieres la app directamente en tu teléfono:
-bash
 
 eas build --platform android --profile preview
 
