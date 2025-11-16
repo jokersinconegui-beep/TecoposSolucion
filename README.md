@@ -1,9 +1,8 @@
-💰 Tecopos Wallet - Tu Monedero Digital
+💰 Tecopos Wallet - Monedero Digital
 
-¡Hola! Esta es una aplicación móvil que desarrollé como prueba técnica para Tecopos. Es como tener tu billetera personal en el celular, donde puedes ver tus cuentas, registrar gastos e ingresos, y llevar un control de tu dinero.
 ✨ Lo que puedes hacer con la app:
 
-    🔐 Iniciar sesión de manera sencilla (es simulado, no te preocupes por contraseñas reales)
+    🔐 Iniciar sesión de manera sencilla (simulado)
 
     🏦 Ver tus cuentas bancarias con sus saldos actuales
 
