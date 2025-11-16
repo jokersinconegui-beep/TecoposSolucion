@@ -16,7 +16,8 @@
 bash
 
 # 1. Descargar el proyecto
-git clone <url-del-repositorio>
+git clone https://github.com/jokersinconegui-beep/TecoposSolucion.git
+
 cd TecoposWallet
 
 # 2. Instalar lo necesario
